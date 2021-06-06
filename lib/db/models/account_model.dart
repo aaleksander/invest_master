@@ -13,6 +13,11 @@ class AccountModel extends BaseModel {
   }
 
   @override
+  toString() {
+    return ('color: $color');
+  }
+
+  @override
   factory AccountModel.fromMap(Map<String, dynamic> row) {
     return AccountModel(
       id: row["id"],

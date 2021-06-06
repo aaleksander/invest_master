@@ -1,11 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:invest_master/db/models/account_model.dart';
+import 'package:invest_master/db/models/base_model.dart';
 
 class AccountSettingsWindow extends StatelessWidget {
-  AccountSettingsWindow(bool create);
+  AccountSettingsWindow({AccountModel? model}) {
+    if (model == null) {
+      print('новый счет');
+      _nameController.text = '';
+      _descriptionController.text = '';
+    } else {
+      print('редактируем');
+      _nameController.text = model.name;
+      _descriptionController.text =
+          model.description == null ? '' : model.description!;
+    }
+  }
   static TextEditingController _nameController = TextEditingController();
   static TextEditingController _descriptionController = TextEditingController();
+  static Color color = Colors.red;
 
   @override
   build(BuildContext context) {
@@ -35,28 +49,41 @@ class AccountSettingsWindow extends StatelessWidget {
               ),
             ),
           ),
-          //TODO предоставить несколько цветов на выбор (штук десять)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(
-                      context,
-                      AccountModel(
-                          name: _nameController.text,
-                          description: _descriptionController.text));
-                },
-                child: Text('OK'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context, null);
-                },
-                child: Text('Отмена'),
-              ),
-            ],
+          Text('Выберите цвет:'),
+          Expanded(
+            child: BlockPicker(
+              pickerColor: color,
+              onColorChanged: (val) {
+                print(val);
+                color = val;
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(
+                        context,
+                        AccountModel(
+                            name: _nameController.text,
+                            description: _descriptionController.text,
+                            color: color2String(color)));
+                  },
+                  child: Text('OK'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, null);
+                  },
+                  child: Text('Отмена'),
+                ),
+              ],
+            ),
           )
         ],
       ),

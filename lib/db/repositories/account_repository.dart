@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:invest_master/db/db_provider.dart';
 import 'package:invest_master/db/models/account_model.dart';
 import 'package:invest_master/db/models/base_model.dart';
@@ -25,7 +24,7 @@ class AccountRepository extends BaseRepository<AccountModel> {
     await db.rawInsert(
         'INSERT INTO $tableName (id, name, desc, color)'
         ' values(?, ?, ?, ?)',
-        [model.id, model.name, model.description, color2String(Colors.blue)]);
+        [model.id, model.name, model.description, color2String(model.color)]);
 
     return model;
   }

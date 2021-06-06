@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
-Color string2Color(String? color) => color != null
-    ? Color(int.parse(color.substring(1, 7), radix: 16) + 0xFF000000)
-    : Color(0xFF606060);
+Color string2Color(String? color) {
+  final res = color != null
+      ? Color(int.parse(color.substring(3), radix: 16) + 0xFF000000)
+      : Color(0xFF606060);
 
-String color2String(Color color) => '#${color.value.toRadixString(16)}';
+  print('string2Color: $color -> $res');
+
+  return res;
+}
+
+String color2String(Color color) {
+  final res = '#${color.value.toRadixString(16)}';
+  print('color2String: $color -> $res');
+  return res;
+}
 
 class BaseModel {
   BaseModel();

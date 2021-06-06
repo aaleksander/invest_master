@@ -1,4 +1,3 @@
-import 'package:invest_master/db/db_provider.dart';
 import 'package:invest_master/db/models/account_model.dart';
 import 'package:invest_master/db/repositories/account_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,8 +6,10 @@ class AccountsStateEvent {
   List<AccountModel>? accounts;
   AccountModel? newAccount;
   AccountModel? removeAccount;
+  AccountModel? updateAccount;
 
-  AccountsStateEvent({this.accounts, this.newAccount, this.removeAccount});
+  AccountsStateEvent(
+      {this.accounts, this.newAccount, this.removeAccount, this.updateAccount});
 }
 
 class AccountsState {
@@ -17,7 +18,10 @@ class AccountsState {
   List<AccountModel> accounts = [];
 
   AccountsState() {
-    // AccountRepository.inst.removeAll();
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //AccountRepository.inst.removeAll();
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     onUpdate = PublishSubject<AccountsStateEvent>();
 
     AccountRepository.inst.getAll().then((val) {
